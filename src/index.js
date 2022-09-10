@@ -78,11 +78,8 @@ const resolvers = {
       }
       //save to database
       const result = await db.collection('Users').insertOne(newUser)
-      console.log(result)
-
       const someId = result.insertedId;
       const actualResult = await db.collection('Users').findOne({ _id: someId });
-      console.log(actualResult)
       
        const  user =  actualResult;
         return{
@@ -90,19 +87,31 @@ const resolvers = {
           token:'token'
        }
    },
-    signIn:()=>{},
+    signIn: async(_,{input},{db})=>{
+       const user = await db.collection('Users').findOne({email:input.email})
+       if(!user){
+        throw new Error('Email does not exist!')
+       }
+
+       const isPasswordCorrect = bcrypt.compareSync(input.password, user.password)
+       if(!isPasswordCorrect){
+        throw new Error('Password is not match!')
+       }
+
+       return{
+        user,
+        token:'token',
+       }
+    },
    },
 
    User:{
-    id: (root) => {
-        console.log(root);
-        return 'hello'
+    id: (root) =>  root._id || root.id ,
+    
     }
-}
 };
 
-console.log('giasdasdt')
-console.log('git denem')
+
 
 const start = async () => {
     
