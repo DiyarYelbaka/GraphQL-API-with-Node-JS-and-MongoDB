@@ -102,6 +102,7 @@ const resolvers = {
 };
 
 console.log('giasdasdt')
+console.log('git denem')
 
 const start = async () => {
     
