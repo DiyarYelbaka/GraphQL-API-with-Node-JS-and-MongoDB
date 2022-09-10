@@ -101,7 +101,7 @@ const resolvers = {
 }
 };
 
-console.log('git')
+console.log('giasdasdt')
 
 const start = async () => {
     
