@@ -82,7 +82,7 @@ const resolvers = {
     myTaskLists: () =>[]
    },
    Mutation:{
-    signUp: async (_,{input},{db,user}) => {
+    signUp: async (_,{input},{db}) => {
       const hashedPassword = bcrypt.hashSync(input.password);
       const newUser = {
         ...input,
